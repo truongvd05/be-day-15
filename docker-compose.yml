@@ -1,0 +1,31 @@
+services:
+    db:
+        image: mysql:8
+        environment:
+            MYSQL_ROOT_PASSWORD: 123VN123vn*
+            MYSQL_DATABASE: day15
+            MYSQL_USER: appuser
+            MYSQL_PASSWORD: 123BD123bd*
+        volumes:
+            - db_data:/var/lib/mysql
+    backend:
+        build: ./backend
+        ports:
+            - "3000:3000"
+        environment:
+            DB_HOST: db
+            DB_USER: appuser
+            DB_PASSWORD: 123BD123bd*
+            DB_NAME: day15
+        depends_on:
+            - db
+
+    frontend:
+        build: ./frontend
+        ports:
+            - "8080:80"
+        depends_on:
+            - backend
+
+volumes:
+    db_data:
